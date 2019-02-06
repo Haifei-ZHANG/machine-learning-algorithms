@@ -28,7 +28,11 @@ def loadDataSet(dataSet):
 #计算参数beta#
 ##------------------##
 def betaHat(trainX,trainY):
-	betaHat = np.dot(np.dot(np.linalg.inv(np.dot(trainX.transpose(),trainX)),trainX.transpose()),trainY)
+	#betaHat = np.dot(np.dot(np.linalg.inv(np.dot(trainX.transpose(),trainX)),trainX.transpose()),trainY)
+	trainXt = np.transpose(trainX)
+	trainXttrainX = np.dot(trainXt,trainX)
+	trainXttrainY = np.dot(trainXt,trainY)
+	betaHat = np.linalg.solve(trainXttrainX,trainXttrainY)
 	return betaHat
 
 ##------------------##
@@ -50,6 +54,6 @@ if __name__ == '__main__':
 	beta = betaHat(trainX,trainY)
 	predictValue = predict(testX,beta)
 	rss = evaluation(testY,predictValue)
-	print(testY)
-	print(predictValue)
-	print(rss)
+	print("real Y values : \n",testY)
+	print("\npredict Y values : \n",predictValue)
+	print("\nRSS = ",rss)
